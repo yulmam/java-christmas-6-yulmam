@@ -10,7 +10,15 @@ public class EventController {
 
     public void start() {
         outputView.printStartMessage();
-        Day day = new Day(inputView.requestVisitDay());
+    }
+
+    private Day requestDay(){
+        try{
+            return new Day(inputView.requestVisitDay());
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            return requestDay();
+        }
     }
 
 }

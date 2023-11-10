@@ -6,4 +6,7 @@ public class Day {
     public Day (int day){
         this.day = day;
     }
+
+
+
 }

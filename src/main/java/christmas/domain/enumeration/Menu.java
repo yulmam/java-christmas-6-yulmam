@@ -26,7 +26,7 @@ public enum Menu {
         this.menuClassification = menuClassification;
     }
 
-    public static Menu of(String name){
+    public static Menu of(String name) throws IllegalArgumentException{
         Menu menu =  Arrays.stream(Menu.values())
                 .filter(m -> m.name.equals(name))
                 .findFirst()

@@ -1,13 +1,17 @@
 package christmas.domain;
 
+import christmas.domain.enumeration.Week;
+
 import java.time.LocalDate;
 
 public class VisitDate {
     private final int date;
+    private final Week week;
 
     public VisitDate(int date){
         validate(date);
         this.date = date;
+        this.week = Week.of(getWeekNumber(date));
     }
 
     private void validate(int date) throws IllegalArgumentException {
@@ -19,7 +23,11 @@ public class VisitDate {
         return date;
     }
 
-    public int getWeek() {
+    public Week getWeek(){
+        return week;
+    }
+
+    public int getWeekNumber(int date) {
         LocalDate week = LocalDate.of(2021, 12, date);
         return week.getDayOfWeek().getValue();
     }

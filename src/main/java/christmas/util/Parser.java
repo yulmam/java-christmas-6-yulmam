@@ -24,6 +24,8 @@ public class Parser {
 
         for(String s : splitedStr){
             String[] str1 = s.split("-");
+            if(map.containsKey(Menu.of(str1[0])))
+                throw new IllegalArgumentException();
             map.put(Menu.of(str1[0]), stringToInt(str1[1]));
         }
 

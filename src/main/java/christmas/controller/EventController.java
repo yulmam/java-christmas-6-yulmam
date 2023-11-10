@@ -1,6 +1,6 @@
 package christmas.controller;
 
-import christmas.domain.Day;
+import christmas.domain.VisitDate;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -12,9 +12,9 @@ public class EventController {
         outputView.printStartMessage();
     }
 
-    private Day requestDay(){
+    private VisitDate requestDay(){
         try{
-            return new Day(inputView.requestVisitDay());
+            return new VisitDate(inputView.requestVisitDay());
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
             return requestDay();

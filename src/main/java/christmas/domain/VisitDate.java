@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import java.time.LocalDate;
+
 public class VisitDate {
     private final int date;
 
@@ -15,6 +17,11 @@ public class VisitDate {
 
     public int getDate(){
         return date;
+    }
+
+    public int getWeek() {
+        LocalDate week = LocalDate.of(2021, 12, date);
+        return week.getDayOfWeek().getValue();
     }
 
 }

@@ -8,6 +8,16 @@ public class Order {
     Map<Menu, Integer> order;
 
     public Order(Map<Menu, Integer> order) {
+        validate(order);
         this.order = order;
+    }
+
+    private void validate(Map<Menu, Integer> order){
+        validateMenuCountZero(order);
+    }
+
+    private void validateMenuCountZero(Map<Menu, Integer> order) {
+        if(order.entrySet().stream().anyMatch(o -> o.getValue() < 1));
+            throw new IllegalArgumentException();
     }
 }

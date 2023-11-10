@@ -14,10 +14,18 @@ public class Order {
 
     private void validate(Map<Menu, Integer> order){
         validateMenuCountZero(order);
+        validateNotNull(order);
     }
 
     private void validateMenuCountZero(Map<Menu, Integer> order) {
         if(order.entrySet().stream().anyMatch(o -> o.getValue() < 1));
             throw new IllegalArgumentException();
     }
+
+    private void validateNotNull(Map<Menu, Integer> order) {
+        if(order.isEmpty())
+            throw new IllegalArgumentException();
+    }
+
+
 }

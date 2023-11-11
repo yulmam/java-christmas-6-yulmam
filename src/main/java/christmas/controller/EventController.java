@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.Sale;
 import christmas.domain.VisitDate;
 import christmas.domain.Order;
 import christmas.view.InputView;
@@ -13,6 +14,9 @@ public class EventController {
         outputView.printStartMessage();
         VisitDate visitDate = requestDay();
         Order order = new Order(inputView.requestOrder());
+        Sale sale = new Sale(visitDate, order);
+        outputView.printAllPrice(order.getAllPrice());
+
     }
 
     private VisitDate requestDay(){

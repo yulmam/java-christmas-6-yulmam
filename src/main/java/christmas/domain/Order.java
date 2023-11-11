@@ -31,12 +31,26 @@ public class Order {
     }
 
     private void validateOnlyDrink(Map<Menu, Integer> order) {
-        if(order.entrySet().stream().allMatch(o -> o.getKey().getMenuClassification() == MenuClassification.bEVERAGE))
+        if(order.entrySet().stream().allMatch(o -> o.getKey().getMenuClassification() == MenuClassification.BEVERAGE))
             throw new IllegalArgumentException();
     }
 
     private void validateMenuOver(Map<Menu, Integer> order) {
         if(order.values().stream().reduce(0, Integer::sum)>20)
             throw new IllegalArgumentException();
+    }
+
+    public int getDesertCount() {
+        return order.entrySet().stream()
+                .filter(o-> o.getKey().getMenuClassification() == MenuClassification.DESERT)
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
+
+    public int getMainCount() {
+        return order.entrySet().stream()
+                .filter(o-> o.getKey().getMenuClassification() == MenuClassification.MAIN)
+                .mapToInt(Map.Entry::getValue)
+                .sum();
     }
 }

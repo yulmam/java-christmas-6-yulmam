@@ -10,6 +10,7 @@ public class Sale {
 
     public Sale(VisitDate visitDate, Order order){
         setChristmasSale(visitDate);
+        setDateSale(visitDate, order);
     }
 
 
@@ -21,5 +22,19 @@ public class Sale {
         christmasSale = (26 - visitDate.getDate()) * 1000;
     }
 
+    private void setDateSale(VisitDate visitDate, Order order) {
+        if(visitDate.getWeek().getIsWeekend()){
+            setWeekendSale(order);
+            return;
+        }
+        setWeekdaySale(order);
+    }
+
+    private void setWeekendSale(Order order){
+        weekendSale = order.getDesertCount() * 2023;
+    }
+    private void setWeekdaySale(Order order) {
+        weekdaySale = order.getMainCount() * 2023;
+    }
 
 }

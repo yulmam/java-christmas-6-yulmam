@@ -32,4 +32,8 @@ public class VisitDate {
         return week.getDayOfWeek().getValue();
     }
 
+    public boolean isSpecialSale(){
+        return week.getIsSpecial();
+    }
+
 }

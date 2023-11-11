@@ -33,4 +33,8 @@ public enum Week {
         return isWeekend;
     }
 
+    public boolean getIsSpecial() {
+        return isSpecial;
+    }
+
 }

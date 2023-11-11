@@ -7,6 +7,8 @@ public class Sale {
     int weekendSale;
     int weekdaySale;
 
+    int specialSale;
+
 
     public Sale(VisitDate visitDate, Order order){
         setChristmasSale(visitDate);
@@ -33,8 +35,14 @@ public class Sale {
     private void setWeekendSale(Order order){
         weekendSale = order.getDesertCount() * 2023;
     }
+
     private void setWeekdaySale(Order order) {
         weekdaySale = order.getMainCount() * 2023;
     }
 
+    private void setWeekdaySale(VisitDate visitDate) {
+        if(visitDate.isSpecialSale() || visitDate.getDate()==25){
+            specialSale = 1000;
+        }
+    }
 }

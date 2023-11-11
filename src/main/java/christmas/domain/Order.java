@@ -53,4 +53,10 @@ public class Order {
                 .mapToInt(Map.Entry::getValue)
                 .sum();
     }
+
+    public int getAllPrice(){
+        return order.entrySet().stream()
+                .mapToInt(e->e.getKey().getPrice() * e.getValue())
+                .sum();
+    }
 }

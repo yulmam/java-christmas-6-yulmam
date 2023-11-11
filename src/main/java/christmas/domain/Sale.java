@@ -6,13 +6,13 @@ public class Sale {
     int christmasSale;
     int weekendSale;
     int weekdaySale;
-
     int specialSale;
 
 
     public Sale(VisitDate visitDate, Order order){
         setChristmasSale(visitDate);
         setDateSale(visitDate, order);
+        setSpecialSale(visitDate);
     }
 
 
@@ -40,7 +40,7 @@ public class Sale {
         weekdaySale = order.getMainCount() * 2023;
     }
 
-    private void setWeekdaySale(VisitDate visitDate) {
+    private void setSpecialSale(VisitDate visitDate) {
         if(visitDate.isSpecialSale() || visitDate.getDate()==25){
             specialSale = 1000;
         }

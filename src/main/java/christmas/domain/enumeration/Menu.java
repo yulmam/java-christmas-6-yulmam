@@ -39,4 +39,8 @@ public enum Menu {
     public MenuClassification getMenuClassification(){
         return menuClassification;
     }
+
+    public int getPrice(){
+        return price;
+    }
 }

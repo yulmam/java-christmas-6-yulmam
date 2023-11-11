@@ -3,10 +3,11 @@ package christmas.domain;
 import org.mockito.internal.matchers.Or;
 
 public class Sale {
-    int christmasSale;
-    int weekendSale;
-    int weekdaySale;
-    int specialSale;
+    private int christmasSale;
+    private int weekendSale;
+    private int weekdaySale;
+    private int specialSale;
+    private int presentSale;
 
 
     public Sale(VisitDate visitDate, Order order){
@@ -14,9 +15,9 @@ public class Sale {
             setChristmasSale(visitDate);
             setDateSale(visitDate, order);
             setSpecialSale(visitDate);
+            setPresentSale(order);
         }
     }
-
 
     private void setChristmasSale(VisitDate visitDate){
         if(visitDate.getDate() > 25){
@@ -46,5 +47,10 @@ public class Sale {
         if(visitDate.isSpecialSale() || visitDate.getDate()==25){
             specialSale = 1000;
         }
+    }
+
+    private void setPresentSale(Order order) {
+        if(order.getAllPrice()>120000)
+            presentSale = 25000;
     }
 }

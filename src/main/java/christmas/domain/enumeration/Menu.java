@@ -35,12 +35,15 @@ public enum Menu {
             throw new IllegalArgumentException();
         return menu;
     }
-
-    public MenuClassification getMenuClassification(){
-        return menuClassification;
+    public String getName(){
+        return name;
     }
 
     public int getPrice(){
         return price;
+    }
+
+    public MenuClassification getMenuClassification(){
+        return menuClassification;
     }
 }

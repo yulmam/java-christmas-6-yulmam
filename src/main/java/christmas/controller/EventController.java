@@ -16,7 +16,7 @@ public class EventController {
         Order order = new Order(inputView.requestOrder());
         Sale sale = new Sale(visitDate, order);
         outputView.printAllPrice(order.getAllPrice());
-        
+        outputView.printOrder(order.getOrder());
     }
 
     private VisitDate requestDay(){

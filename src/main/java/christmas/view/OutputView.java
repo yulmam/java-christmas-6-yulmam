@@ -1,5 +1,9 @@
 package christmas.view;
 
+import christmas.domain.enumeration.Menu;
+
+import java.util.Map;
+
 public class OutputView {
 
     public void printStartMessage() {
@@ -9,5 +13,10 @@ public class OutputView {
     public void printAllPrice(int allPrice) {
         System.out.println("할인 전 총주문 금액");
         System.out.println(allPrice + "원");
+    }
+
+    public void printOrder(Map<Menu, Integer> order){
+        System.out.println("<주문 메뉴>");
+        order.forEach((key, value) -> System.out.println(key.getName() + " " + value + "개"));
     }
 }

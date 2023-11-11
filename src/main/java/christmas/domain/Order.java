@@ -59,4 +59,8 @@ public class Order {
                 .mapToInt(e->e.getKey().getPrice() * e.getValue())
                 .sum();
     }
+
+    public Map<Menu, Integer> getOrder(){
+        return order;
+    }
 }

@@ -12,9 +12,9 @@ public enum Menu {
     CHRISTMAS_PASTA("크리스마스파스타", 25000, MenuClassification.MAIN),
     CHOCOLATE_CAKE("초코케이크", 15000, MenuClassification.DESERT),
     ICE_CREAM("아이스크림", 5000, MenuClassification.DESERT),
-    ZERO_COKE("제로콜라", 3000, MenuClassification.bEVERAGE),
-    RED_WINE("레드와인", 60000, MenuClassification.bEVERAGE),
-    CHAMPAGNE("샴페인", 25000, MenuClassification.bEVERAGE);
+    ZERO_COKE("제로콜라", 3000, MenuClassification.BEVERAGE),
+    RED_WINE("레드와인", 60000, MenuClassification.BEVERAGE),
+    CHAMPAGNE("샴페인", 25000, MenuClassification.BEVERAGE);
 
     String name;
     int price;

@@ -4,6 +4,6 @@ public enum MenuClassification {
     APPETIZER,
     MAIN,
     DESERT,
-    bEVERAGE;
+    BEVERAGE;
 
 }

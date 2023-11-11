@@ -17,6 +17,7 @@ public class Order {
         validateMenuCountZero(order);
         validateNotNull(order);
         validateOnlyDrink(order);
+        validateMenuOver(order);
     }
 
     private void validateMenuCountZero(Map<Menu, Integer> order) {
@@ -34,5 +35,8 @@ public class Order {
             throw new IllegalArgumentException();
     }
 
-
+    private void validateMenuOver(Map<Menu, Integer> order) {
+        if(order.values().stream().reduce(0, Integer::sum)>20)
+            throw new IllegalArgumentException();
+    }
 }

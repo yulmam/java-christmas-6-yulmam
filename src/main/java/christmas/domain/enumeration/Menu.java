@@ -35,4 +35,8 @@ public enum Menu {
             throw new IllegalArgumentException();
         return menu;
     }
+
+    public MenuClassification getMenuClassification(){
+        return menuClassification;
+    }
 }

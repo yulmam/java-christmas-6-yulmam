@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.domain.enumeration.Menu;
+import christmas.domain.enumeration.MenuClassification;
 
 import java.util.Map;
 
@@ -15,15 +16,21 @@ public class Order {
     private void validate(Map<Menu, Integer> order){
         validateMenuCountZero(order);
         validateNotNull(order);
+        validateOnlyDrink(order);
     }
 
     private void validateMenuCountZero(Map<Menu, Integer> order) {
-        if(order.entrySet().stream().anyMatch(o -> o.getValue() < 1));
+        if(order.entrySet().stream().anyMatch(o -> o.getValue() < 1))
             throw new IllegalArgumentException();
     }
 
     private void validateNotNull(Map<Menu, Integer> order) {
         if(order.isEmpty())
+            throw new IllegalArgumentException();
+    }
+
+    private void validateOnlyDrink(Map<Menu, Integer> order) {
+        if(order.entrySet().stream().allMatch(o -> o.getKey().getMenuClassification() == MenuClassification.bEVERAGE))
             throw new IllegalArgumentException();
     }
 

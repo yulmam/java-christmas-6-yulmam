@@ -10,9 +10,11 @@ public class Sale {
 
 
     public Sale(VisitDate visitDate, Order order){
-        setChristmasSale(visitDate);
-        setDateSale(visitDate, order);
-        setSpecialSale(visitDate);
+        if(order.getAllPrice() > 10000){
+            setChristmasSale(visitDate);
+            setDateSale(visitDate, order);
+            setSpecialSale(visitDate);
+        }
     }
 
 

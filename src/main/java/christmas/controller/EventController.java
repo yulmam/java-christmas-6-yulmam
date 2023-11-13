@@ -15,8 +15,9 @@ public class EventController {
         VisitDate visitDate = requestDay();
         Order order = new Order(inputView.requestOrder());
         Sale sale = new Sale(visitDate, order);
-        outputView.printAllPrice(order.getAllPrice());
         outputView.printOrder(order.getOrder());
+        outputView.printAllPrice(order.getAllPrice());
+        printSale(sale);
     }
 
     private VisitDate requestDay(){
@@ -26,6 +27,10 @@ public class EventController {
             System.out.println(e.getMessage());
             return requestDay();
         }
+    }
+
+    private void printSale(Sale sale){
+        outputView.printSaleList(sale.getSaleList());
     }
 
 }

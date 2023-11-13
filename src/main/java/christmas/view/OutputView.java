@@ -19,4 +19,9 @@ public class OutputView {
         System.out.println("<주문 메뉴>");
         order.forEach((key, value) -> System.out.println(key.getName() + " " + value + "개"));
     }
+    public void printSaleList(Map<String, Integer> saleList){
+        System.out.println("<해택 내역>");
+        saleList.entrySet()
+                .forEach(e-> System.out.println(e.getKey()+": -"+e.getValue()+"원"));
+    }
 }

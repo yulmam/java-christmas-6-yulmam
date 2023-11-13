@@ -2,6 +2,9 @@ package christmas.domain;
 
 import org.mockito.internal.matchers.Or;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Sale {
     private int christmasSale;
     private int weekendSale;
@@ -52,5 +55,20 @@ public class Sale {
     private void setPresentSale(Order order) {
         if(order.getAllPrice()>120000)
             presentSale = 25000;
+    }
+
+    public Map<String, Integer> getSaleList() {
+        Map<String, Integer> saleList = new HashMap<>();
+        if(christmasSale != 0)
+            saleList.put("크리스마스 디데이 할인", christmasSale);
+        if(weekdaySale != 0)
+            saleList.put("평일 할인", weekdaySale);
+        if(weekendSale != 0)
+            saleList.put("주말 할인", weekendSale);
+        if(specialSale != 0)
+            saleList.put("특별 할인", specialSale);
+        if(presentSale != 0)
+            saleList.put("증정 이벤트", presentSale);
+        return saleList;
     }
 }

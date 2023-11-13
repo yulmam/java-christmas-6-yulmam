@@ -21,6 +21,7 @@ public class EventController {
         printSale(sale);
         outputView.printAllSalePrice(sale.getAllSalePrice());
         outputView.printAfterSalePrice(order.getAllPrice()- sale.getAllSalePrice());
+        outputView.printBadge(sale.getBedge());
 
     }
 

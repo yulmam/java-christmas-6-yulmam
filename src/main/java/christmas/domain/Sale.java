@@ -25,7 +25,7 @@ public class Sale {
             christmasSale = 0;
             return;
         }
-        christmasSale = (26 - visitDate.getDate()) * 1000;
+        christmasSale = visitDate.getDate() * 1000;
     }
 
     private void setDateSale(VisitDate visitDate, Order order) {
@@ -73,5 +73,16 @@ public class Sale {
 
     public int getAllSalePrice(){
         return christmasSale + weekendSale + weekdaySale + specialSale + presentSale;
+    }
+
+    public String getBedge() {
+        int allSalePrice = getAllSalePrice();
+        if(allSalePrice > 20000)
+            return "산타";
+        if(allSalePrice > 10000)
+            return "트리";
+        if(allSalePrice > 5000)
+            return "별";
+        return "없음";
     }
 }

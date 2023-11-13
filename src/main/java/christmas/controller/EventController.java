@@ -7,6 +7,7 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 
 public class EventController {
+
     private InputView inputView = new InputView();
     private OutputView outputView = new OutputView();
 
@@ -19,6 +20,8 @@ public class EventController {
         outputView.printAllPrice(order.getAllPrice());
         printSale(sale);
         outputView.printAllSalePrice(sale.getAllSalePrice());
+        outputView.printAfterSalePrice(order.getAllPrice()- sale.getAllSalePrice());
+
     }
 
     private VisitDate requestDay(){

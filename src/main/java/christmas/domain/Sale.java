@@ -1,8 +1,6 @@
 package christmas.domain;
 
-import org.mockito.internal.matchers.Or;
-
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Sale {
@@ -33,6 +31,7 @@ public class Sale {
     private void setDateSale(VisitDate visitDate, Order order) {
         if(visitDate.getWeek().getIsWeekend()){
             setWeekendSale(order);
+            System.out.println("test");
             return;
         }
         setWeekdaySale(order);
@@ -58,7 +57,7 @@ public class Sale {
     }
 
     public Map<String, Integer> getSaleList() {
-        Map<String, Integer> saleList = new HashMap<>();
+        Map<String, Integer> saleList = new LinkedHashMap<>();
         if(christmasSale != 0)
             saleList.put("크리스마스 디데이 할인", christmasSale);
         if(weekdaySale != 0)
@@ -70,5 +69,9 @@ public class Sale {
         if(presentSale != 0)
             saleList.put("증정 이벤트", presentSale);
         return saleList;
+    }
+
+    public int getAllSalePrice(){
+        return christmasSale + weekendSale + weekdaySale + specialSale + presentSale;
     }
 }

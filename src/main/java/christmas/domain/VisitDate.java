@@ -28,7 +28,7 @@ public class VisitDate {
     }
 
     private int getWeekNumber(int date) {
-        LocalDate week = LocalDate.of(2021, 12, date);
+        LocalDate week = LocalDate.of(2023, 12, date);
         return week.getDayOfWeek().getValue();
     }
 

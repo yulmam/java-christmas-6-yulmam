@@ -18,6 +18,7 @@ public class EventController {
         outputView.printOrder(order.getOrder());
         outputView.printAllPrice(order.getAllPrice());
         printSale(sale);
+        outputView.printAllSalePrice(sale.getAllSalePrice());
     }
 
     private VisitDate requestDay(){

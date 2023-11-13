@@ -24,4 +24,9 @@ public class OutputView {
         saleList.entrySet()
                 .forEach(e-> System.out.println(e.getKey()+": -"+e.getValue()+"원"));
     }
+
+    public void printAllSalePrice(int price){
+        System.out.println("<할인 후 예상 결제 금액>");
+        System.out.println("-" + price + "원");
+    }
 }

@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,89 +13,69 @@ public class Discount {
     private static final int PRESENT_PRICE = 25000;
 
 
-    private Map<String, Integer> discounts;
-    private int christmasSale;
-    private int weekendSale;
-    private int weekdaySale;
-    private int specialSale;
-    private int presentSale;
+    private final Map<String, Integer> discounts = new LinkedHashMap<>();
 
     private int discountedPrice;
 
-
-
     public Discount(VisitDate visitDate, Order order){
         if(order.calculateAllPrice() >= MINIMUM_PRICE){
-            setChristmasSale(visitDate);
-            setDateSale(visitDate, order);
-            setSpecialSale(visitDate);
-            setPresentSale(order);
+            checkChristmasSale(visitDate);
+            checkDateSale(visitDate, order);
+            checkSpecialSale(visitDate);
+            checkPresentSale(order);
         }
         setDiscountedPrice(order);
     }
 
-    private void setChristmasSale(VisitDate visitDate){
-        if(visitDate.getDate() > CHRISTMAS_DAY){
-            christmasSale = 0;
-            return;
+    private void checkChristmasSale(VisitDate visitDate){
+        if(visitDate.getDate() < CHRISTMAS_DAY){
+            discounts.put("크리스마스 디데이 할인", visitDate.getDate() * 100 + CHRISTMAS_SALE_DEFAULT);
         }
-        christmasSale = visitDate.getDate() * 100 + CHRISTMAS_SALE_DEFAULT;
     }
 
-    private void setDateSale(VisitDate visitDate, Order order) {
+    private void checkDateSale(VisitDate visitDate, Order order) {
         if(visitDate.isWeekend()){
-            setWeekendSale(order);
+            discounts.put("주말 할인", order.countMain() * 2023);
+        }
+        discounts.put("평일 할인", order.countDesert() * 2023);
+    }
+
+    private void checkSpecialSale(VisitDate visitDate) {
+        if(visitDate.isSunday() || visitDate.getDate() == CHRISTMAS_DAY){
+            discounts.put("특별 할인", 1000);
+        }
+    }
+
+    private void checkPresentSale(Order order){
+        if(order.calculateAllPrice() > PRESENT_SALE_MINIMUM)
+            discounts.put("증정 이벤트", PRESENT_PRICE);
+    }
+
+    private void setDiscountedPrice(Order order) {
+        if(isPresent()){
+            discountedPrice = order.calculateAllPrice() - sumAllDiscounts() + 25000;
             return;
         }
-        setWeekdaySale(order);
+        discountedPrice = order.calculateAllPrice() - sumAllDiscounts();
     }
 
-    private void setWeekendSale(Order order){
-        weekendSale = order.countMain() * 2023;
+    public boolean isPresent(){
+        return discounts.containsKey("증정 이벤트");
     }
 
-    private void setWeekdaySale(Order order) {
-        weekdaySale = order.countDesert() * 2023;
+    public Map<String, Integer> getDiscounts() {
+        return Collections.unmodifiableMap(discounts);
     }
 
-    private void setSpecialSale(VisitDate visitDate) {
-        if(visitDate.isSunday() || visitDate.getDate() == CHRISTMAS_DAY){
-            specialSale = 1000;
-        }
+    public int getDiscountedPrice() {
+        return discountedPrice;
+    }
+    public int sumAllDiscounts(){
+        return discounts.values().stream().mapToInt(Integer::intValue).sum();
     }
 
-    private void setPresentSale(Order order) {
-        if(order.calculateAllPrice() > PRESENT_SALE_MINIMUM)
-            presentSale = PRESENT_PRICE;
-    }
-
-    private void setDiscountedPrice(Order order){
-        discountedPrice = order.calculateAllPrice() - getAllDiscountPrice();
-    }
-
-    public Map<String, Integer> getSaleDetails() {
-        Map<String, Integer> saleList = new LinkedHashMap<>();
-        if(christmasSale != 0)
-            saleList.put("크리스마스 디데이 할인", christmasSale);
-        if(weekdaySale != 0)
-            saleList.put("평일 할인", weekdaySale);
-        if(weekendSale != 0)
-            saleList.put("주말 할인", weekendSale);
-        if(specialSale != 0)
-            saleList.put("특별 할인", specialSale);
-        if(presentSale != 0)
-            saleList.put("증정 이벤트", presentSale);
-        if(saleList.isEmpty())
-            saleList.put("없음", null);
-        return saleList;
-    }
-
-    public int getAllDiscountPrice(){
-        return christmasSale + weekendSale + weekdaySale + specialSale + presentSale;
-    }
-
-    public String getBedge() {
-        int allSalePrice = getAllDiscountPrice();
+    public String getBadge() {
+        int allSalePrice = sumAllDiscounts();
         if(allSalePrice > 20000)
             return "산타";
         if(allSalePrice > 10000)
@@ -103,9 +84,4 @@ public class Discount {
             return "별";
         return "없음";
     }
-
-    public int getDiscountedPrice(){
-        return discountedPrice;
-    }
-
 }

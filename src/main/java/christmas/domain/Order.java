@@ -4,6 +4,7 @@ import christmas.domain.enumeration.Menu;
 import christmas.domain.enumeration.MenuClassification;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
@@ -34,8 +35,10 @@ public class Order {
                 .sum();
     }
 
-    public Map<Menu, Integer> getOrder(){
-        return Collections.unmodifiableMap(order);
+    public Map<String, Integer> getOrderContents(){
+        Map<String, Integer> orderContents = new HashMap<>();
+        order.forEach((key, value) -> orderContents.put(key.getName(), value));
+        return orderContents;
     }
 
     private void validate(Map<Menu, Integer> order){

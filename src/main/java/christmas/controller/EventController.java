@@ -1,6 +1,6 @@
 package christmas.controller;
 
-import christmas.domain.Sale;
+import christmas.domain.Discount;
 import christmas.domain.VisitDate;
 import christmas.domain.Order;
 import christmas.view.InputView;
@@ -15,11 +15,10 @@ public class EventController {
         outputView.printStartMessage();
         VisitDate visitDate = requestDay();
         Order order = requestOrder();
+        outputView.printDayMessage(visitDate.getDate());
         printOrderResult(order);
-        Sale sale = new Sale(visitDate, order);
-        printSaleResult(sale);
-        outputView.printAfterSalePrice(order.calculateAllPrice()- sale.getAllSalePrice());
-        outputView.printBadge(sale.getBedge());
+        Discount discount = new Discount(visitDate, order);
+        printSaleResult(discount, order);
     }
 
     private VisitDate requestDay(){
@@ -41,14 +40,16 @@ public class EventController {
     }
 
     private void printOrderResult(Order order) {
-        outputView.printOrder(order.getOrder());
+        outputView.printOrder(order.getOrderContents());
         outputView.printAllPrice(order.calculateAllPrice());
-
     }
 
-    private void printSaleResult(Sale sale){
-        outputView.printSaleList(sale.getSaleDetails());
-        outputView.printAllSalePrice(sale.getAllSalePrice());
+    private void printSaleResult(Discount discount, Order order) {
+        outputView.printPresent(discount.isPresent());
+        outputView.printSaleList(discount.getDiscounts());
+        outputView.printAllSalePrice(discount.sumAllDiscounts());
+        outputView.printAfterSalePrice(discount.getDiscountedPrice());
+        outputView.printBadge(discount.getBadge());
     }
 
 }

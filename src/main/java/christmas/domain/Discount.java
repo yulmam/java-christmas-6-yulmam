@@ -7,10 +7,16 @@ import java.util.Map;
 public class Discount {
 
     private static final int MINIMUM_PRICE = 10000;
+    private static final int CHRISTMAS_YEAR = 2023;
     private static final int CHRISTMAS_DAY = 25;
+    private static final int SPECIAL_DISCOUNT = 1000;
     private static final int CHRISTMAS_SALE_DEFAULT = 900;
     private static final int PRESENT_SALE_MINIMUM = 120000;
-    private static final int PRESENT_PRICE = 25000;
+    private static final int PRESENT_DISCOUNT = 25000;
+    private static final int STAR_MINIMUM = 5000;
+    private static final int TREE_MINIMUM = 10000;
+    private static final int SANTA_MINIMUM = 20000;
+
 
 
     private final Map<String, Integer> discounts = new LinkedHashMap<>();
@@ -19,47 +25,53 @@ public class Discount {
 
     public Discount(VisitDate visitDate, Order order){
         if(order.calculateAllPrice() >= MINIMUM_PRICE){
-            checkChristmasSale(visitDate);
-            checkDateSale(visitDate, order);
-            checkSpecialSale(visitDate);
-            checkPresentSale(order);
+            checkDiscounts(visitDate, order);
         }
         setDiscountedPrice(order);
     }
 
-    private void checkChristmasSale(VisitDate visitDate){
+    private void checkDiscounts(VisitDate visitDate, Order order) {
+        checkChristmasDiscount(visitDate);
+        checkDateDiscount(visitDate, order);
+        checkSpecialDiscount(visitDate);
+        checkPresentDiscount(order);
+    }
+
+    private void checkChristmasDiscount(VisitDate visitDate){
         if(visitDate.getDate() < CHRISTMAS_DAY){
             discounts.put("크리스마스 디데이 할인", visitDate.getDate() * 100 + CHRISTMAS_SALE_DEFAULT);
         }
     }
 
-    private void checkDateSale(VisitDate visitDate, Order order) {
-        if(visitDate.isWeekend()){
-            discounts.put("주말 할인", order.countMain() * 2023);
+    private void checkDateDiscount(VisitDate visitDate, Order order) {
+        if(visitDate.isWeekend() && order.countMain() != 0){
+            discounts.put("주말 할인", order.countMain() * CHRISTMAS_YEAR);
+            return;
         }
-        discounts.put("평일 할인", order.countDesert() * 2023);
+        if(!visitDate.isWeekend() && order.countDesert() != 0)
+            discounts.put("평일 할인", order.countDesert() * CHRISTMAS_YEAR);
     }
 
-    private void checkSpecialSale(VisitDate visitDate) {
+    private void checkSpecialDiscount(VisitDate visitDate) {
         if(visitDate.isSunday() || visitDate.getDate() == CHRISTMAS_DAY){
-            discounts.put("특별 할인", 1000);
+            discounts.put("특별 할인", SPECIAL_DISCOUNT);
         }
     }
 
-    private void checkPresentSale(Order order){
+    private void checkPresentDiscount(Order order){
         if(order.calculateAllPrice() > PRESENT_SALE_MINIMUM)
-            discounts.put("증정 이벤트", PRESENT_PRICE);
+            discounts.put("증정 이벤트", PRESENT_DISCOUNT);
     }
 
     private void setDiscountedPrice(Order order) {
-        if(isPresent()){
-            discountedPrice = order.calculateAllPrice() - sumAllDiscounts() + 25000;
+        if(isPresentDiscount()){
+            discountedPrice = order.calculateAllPrice() - sumAllDiscounts() + PRESENT_DISCOUNT;
             return;
         }
         discountedPrice = order.calculateAllPrice() - sumAllDiscounts();
     }
 
-    public boolean isPresent(){
+    public boolean isPresentDiscount(){
         return discounts.containsKey("증정 이벤트");
     }
 
@@ -75,12 +87,12 @@ public class Discount {
     }
 
     public String getBadge() {
-        int allSalePrice = sumAllDiscounts();
-        if(allSalePrice > 20000)
+        int allDiscountsPrice = sumAllDiscounts();
+        if(allDiscountsPrice > SANTA_MINIMUM)
             return "산타";
-        if(allSalePrice > 10000)
+        if(allDiscountsPrice > TREE_MINIMUM)
             return "트리";
-        if(allSalePrice > 5000)
+        if(allDiscountsPrice > STAR_MINIMUM)
             return "별";
         return "없음";
     }

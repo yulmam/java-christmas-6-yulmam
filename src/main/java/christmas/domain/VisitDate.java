@@ -8,7 +8,7 @@ public class VisitDate {
     private final int date;
     private final Week week;
 
-    public VisitDate(int date){
+    public VisitDate(int date) throws IllegalArgumentException{
         validate(date);
         this.date = date;
         this.week = Week.of(getWeekNumber(date));
@@ -16,7 +16,7 @@ public class VisitDate {
 
     private void validate(int date) throws IllegalArgumentException {
         if(date < 1 || date > 31)
-            throw new IllegalArgumentException("날짜는 1일 부터 31일 까지입니다.");
+            throw new IllegalArgumentException("[ERROR] 날자는 1부터 31일 사이어야 합니다.");
     }
 
     public int getDate(){
@@ -24,7 +24,7 @@ public class VisitDate {
     }
 
     public boolean isWeekend() {
-        if(week.getIsWeekend())
+        if(week.equals(Week.FRI) || week.equals(Week.SAT))
             return true;
         return false;
     }

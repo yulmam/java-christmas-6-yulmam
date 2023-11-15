@@ -13,19 +13,25 @@ public class EventController {
 
     public void start() {
         outputView.printStartMessage();
+
         VisitDate visitDate = requestDay();
+
         Order order = requestOrder();
+
         outputView.printDayMessage(visitDate.getDate());
+
         printOrderResult(order);
+
         Discount discount = new Discount(visitDate, order);
-        printSaleResult(discount, order);
+
+        printDiscountResult(discount);
     }
 
     private VisitDate requestDay(){
         try{
             return new VisitDate(inputView.printRequestVisitDayMessage());
         } catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
+            System.out.println("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
             return requestDay();
         }
     }
@@ -34,7 +40,7 @@ public class EventController {
         try{
             return new Order(inputView.printRequestOrderMessage());
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             return requestOrder();
         }
     }
@@ -44,8 +50,8 @@ public class EventController {
         outputView.printAllPrice(order.calculateAllPrice());
     }
 
-    private void printSaleResult(Discount discount, Order order) {
-        outputView.printPresent(discount.isPresent());
+    private void printDiscountResult(Discount discount) {
+        outputView.printPresent(discount.isPresentDiscount());
         outputView.printSaleList(discount.getDiscounts());
         outputView.printAllSalePrice(discount.sumAllDiscounts());
         outputView.printAfterSalePrice(discount.getDiscountedPrice());

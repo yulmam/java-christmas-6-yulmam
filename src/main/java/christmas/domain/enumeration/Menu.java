@@ -32,7 +32,7 @@ public enum Menu {
                 .findFirst()
                 .orElse(null);
         if(menu == null)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("[ERROR]없는 메뉴입니다.");
         return menu;
     }
     public String getName(){

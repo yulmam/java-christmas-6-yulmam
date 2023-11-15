@@ -35,6 +35,7 @@ public enum Menu {
             throw new IllegalArgumentException("[ERROR]없는 메뉴입니다.");
         return menu;
     }
+
     public String getName(){
         return name;
     }
@@ -43,7 +44,21 @@ public enum Menu {
         return price;
     }
 
-    public MenuClassification getMenuClassification(){
-        return menuClassification;
+    public boolean isDesert(){
+        if(menuClassification == MenuClassification.DESERT)
+            return true;
+        return false;
+    }
+
+    public boolean isMain(){
+        if(menuClassification == MenuClassification.MAIN)
+            return true;
+        return false;
+    }
+
+    public boolean isBeverage() {
+        if(menuClassification == MenuClassification.BEVERAGE)
+            return true;
+        return false;
     }
 }

@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
+
+    private static final int ORDER_MAXIMUM = 20;
+    private static final int ORDER_MINIMUM = 1;
+
     private final Map<Menu, Integer> order;
 
     public Order(Map<Menu, Integer> order) throws IllegalArgumentException{
@@ -17,14 +21,14 @@ public class Order {
 
     public int countDesert() {
         return order.entrySet().stream()
-                .filter(o-> o.getKey().getMenuClassification() == MenuClassification.DESERT)
+                .filter(o-> o.getKey().isDesert())
                 .mapToInt(Map.Entry::getValue)
                 .sum();
     }
 
     public int countMain() {
         return order.entrySet().stream()
-                .filter(o-> o.getKey().getMenuClassification() == MenuClassification.MAIN)
+                .filter(o-> o.getKey().isMain())
                 .mapToInt(Map.Entry::getValue)
                 .sum();
     }
@@ -49,7 +53,7 @@ public class Order {
     }
 
     private void validateMenuCountZero(Map<Menu, Integer> order) throws IllegalArgumentException{
-        if(order.entrySet().stream().anyMatch(o -> o.getValue() < 1))
+        if(order.entrySet().stream().anyMatch(o -> o.getValue() < ORDER_MINIMUM))
             throw new IllegalArgumentException("[ERROR] 메뉴는 1개 이상부터 주문이 가능합니다.");
     }
 
@@ -59,12 +63,12 @@ public class Order {
     }
 
     private void validateOnlyDrink(Map<Menu, Integer> order) throws IllegalArgumentException{
-        if(order.entrySet().stream().allMatch(o -> o.getKey().getMenuClassification() == MenuClassification.BEVERAGE))
+        if(order.entrySet().stream().allMatch(o -> o.getKey().isBeverage()))
             throw new IllegalArgumentException("[ERROR] 음료만 시킬 수 없습니다.");
     }
 
     private void validateMenuOver(Map<Menu, Integer> order) throws IllegalArgumentException{
-        if(order.values().stream().reduce(0, Integer::sum) > 20)
+        if(order.values().stream().reduce(0, Integer::sum) > ORDER_MAXIMUM)
             throw new IllegalArgumentException("[ERROR] 메뉴는 최대 20개 까지 주문이 가능합니다.");
     }
 

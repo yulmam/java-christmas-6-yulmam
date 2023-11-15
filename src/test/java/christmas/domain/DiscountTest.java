@@ -49,7 +49,7 @@ public class DiscountTest {
         setUp();
 
         //then
-        assertEquals(discount.getBadge(), "산타");//할인 금액이 32069로 혜택은 산타입니다.
+        assertEquals(discount.checkBadge(), "산타");//할인 금액이 32069로 혜택은 산타입니다.
     }
 
     @Test

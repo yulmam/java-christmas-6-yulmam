@@ -10,13 +10,13 @@ public class Discount {
     private static final int CHRISTMAS_YEAR = 2023;
     private static final int CHRISTMAS_DAY = 25;
     private static final int SPECIAL_DISCOUNT = 1000;
-    private static final int CHRISTMAS_SALE_DEFAULT = 900;
-    private static final int PRESENT_SALE_MINIMUM = 120000;
+    private static final int CHRISTMAS_DISCOUNT_DEFAULT = 900;
+    private static final int CHRISTMAS_DAY_DISCOUNT = 100;
+    private static final int PRESENT_MINIMUM_PRICE = 120000;
     private static final int PRESENT_DISCOUNT = 25000;
     private static final int STAR_MINIMUM = 5000;
     private static final int TREE_MINIMUM = 10000;
     private static final int SANTA_MINIMUM = 20000;
-
 
 
     private final Map<String, Integer> discounts = new LinkedHashMap<>();
@@ -39,7 +39,7 @@ public class Discount {
 
     private void checkChristmasDiscount(VisitDate visitDate){
         if(visitDate.getDate() < CHRISTMAS_DAY){
-            discounts.put("크리스마스 디데이 할인", visitDate.getDate() * 100 + CHRISTMAS_SALE_DEFAULT);
+            discounts.put("크리스마스 디데이 할인", visitDate.getDate() * CHRISTMAS_DAY_DISCOUNT + CHRISTMAS_DISCOUNT_DEFAULT);
         }
     }
 
@@ -59,7 +59,7 @@ public class Discount {
     }
 
     private void checkPresentDiscount(Order order){
-        if(order.calculateAllPrice() > PRESENT_SALE_MINIMUM)
+        if(order.calculateAllPrice() > PRESENT_MINIMUM_PRICE)
             discounts.put("증정 이벤트", PRESENT_DISCOUNT);
     }
 
@@ -82,11 +82,12 @@ public class Discount {
     public int getDiscountedPrice() {
         return discountedPrice;
     }
+
     public int sumAllDiscounts(){
         return discounts.values().stream().mapToInt(Integer::intValue).sum();
     }
 
-    public String getBadge() {
+    public String checkBadge() {
         int allDiscountsPrice = sumAllDiscounts();
         if(allDiscountsPrice > SANTA_MINIMUM)
             return "산타";

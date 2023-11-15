@@ -5,6 +5,12 @@ import christmas.domain.enumeration.Week;
 import java.time.LocalDate;
 
 public class VisitDate {
+    private static final int MAXIMUM_DAY = 31;
+    private static final int MINIMUM_DAY = 1;
+    private static final int YEAR = 2023;
+    private static final int MONTH = 12;
+
+
     private final int date;
     private final Week week;
 
@@ -15,7 +21,7 @@ public class VisitDate {
     }
 
     private void validate(int date) throws IllegalArgumentException {
-        if(date < 1 || date > 31)
+        if(date < MINIMUM_DAY || date > MAXIMUM_DAY)
             throw new IllegalArgumentException("[ERROR] 날자는 1부터 31일 사이어야 합니다.");
     }
 
@@ -30,7 +36,7 @@ public class VisitDate {
     }
 
     private int getWeekNumber(int date) {
-        LocalDate week = LocalDate.of(2023, 12, date);
+        LocalDate week = LocalDate.of(YEAR, MONTH, date);
         return week.getDayOfWeek().getValue();
     }
 

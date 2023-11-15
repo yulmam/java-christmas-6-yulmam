@@ -8,8 +8,8 @@ import christmas.view.OutputView;
 
 public class EventController {
 
-    private InputView inputView = new InputView();
-    private OutputView outputView = new OutputView();
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView();
 
     public void start() {
         outputView.printStartMessage();
@@ -55,7 +55,7 @@ public class EventController {
         outputView.printSaleList(discount.getDiscounts());
         outputView.printAllSalePrice(discount.sumAllDiscounts());
         outputView.printAfterSalePrice(discount.getDiscountedPrice());
-        outputView.printBadge(discount.getBadge());
+        outputView.printBadge(discount.checkBadge());
     }
 
 }

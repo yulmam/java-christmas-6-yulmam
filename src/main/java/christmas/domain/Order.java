@@ -3,6 +3,7 @@ package christmas.domain;
 import christmas.domain.enumeration.Menu;
 import christmas.domain.enumeration.MenuClassification;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class Order {
@@ -11,6 +12,30 @@ public class Order {
     public Order(Map<Menu, Integer> order) {
         validate(order);
         this.order = order;
+    }
+
+    public int countDesert() {
+        return order.entrySet().stream()
+                .filter(o-> o.getKey().getMenuClassification() == MenuClassification.DESERT)
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
+
+    public int countMain() {
+        return order.entrySet().stream()
+                .filter(o-> o.getKey().getMenuClassification() == MenuClassification.MAIN)
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
+
+    public int calculateAllPrice(){
+        return order.entrySet().stream()
+                .mapToInt(e->e.getKey().getPrice() * e.getValue())
+                .sum();
+    }
+
+    public Map<Menu, Integer> getOrder(){
+        return Collections.unmodifiableMap(order);
     }
 
     private void validate(Map<Menu, Integer> order){
@@ -40,27 +65,5 @@ public class Order {
             throw new IllegalArgumentException();
     }
 
-    public int getDesertCount() {
-        return order.entrySet().stream()
-                .filter(o-> o.getKey().getMenuClassification() == MenuClassification.DESERT)
-                .mapToInt(Map.Entry::getValue)
-                .sum();
-    }
 
-    public int getMainCount() {
-        return order.entrySet().stream()
-                .filter(o-> o.getKey().getMenuClassification() == MenuClassification.MAIN)
-                .mapToInt(Map.Entry::getValue)
-                .sum();
-    }
-
-    public int getAllPrice(){
-        return order.entrySet().stream()
-                .mapToInt(e->e.getKey().getPrice() * e.getValue())
-                .sum();
-    }
-
-    public Map<Menu, Integer> getOrder(){
-        return order;
-    }
 }

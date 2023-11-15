@@ -26,7 +26,7 @@ public class OutputView {
     }
 
     public void printAllSalePrice(int price){
-        System.out.println("<할인 후 예상 결제 금액>");
+        System.out.println("<총 혜택 금액>");
         System.out.println("-" + price + "원");
     }
 
@@ -39,4 +39,6 @@ public class OutputView {
         System.out.println("<12월 이벤트 배지>");
         System.out.println(Badge);
     }
+
+
 }

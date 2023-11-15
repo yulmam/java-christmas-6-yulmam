@@ -3,23 +3,21 @@ package christmas.domain.enumeration;
 import java.util.Arrays;
 
 public enum Week {
-    MON(1, false, false),
-    TUE(2, false, false),
-    WED(3, false, false),
-    THU(4, false, false),
-    FRI(5, true, false),
-    SAT(6, true, false),
-    SUN(7, false, true);;
+    MON(1, false),
+    TUE(2, false),
+    WED(3, false),
+    THU(4, false),
+    FRI(5, true),
+    SAT(6, true),
+    SUN(7, false);;
 
 
-    int dayValue;
-    boolean isWeekend;
-    boolean isSpecial;
+    private final int dayValue;
+    private final boolean isWeekend;
 
-    Week(int dayValue, boolean isWeekend, boolean isSpecial) {
+    Week(int dayValue, boolean isWeekend) {
         this.dayValue = dayValue;
         this.isWeekend = isWeekend;
-        this.isSpecial = isSpecial;
     }
 
     public static Week of(int dayValue){
@@ -32,9 +30,4 @@ public enum Week {
     public boolean getIsWeekend(){
         return isWeekend;
     }
-
-    public boolean getIsSpecial() {
-        return isSpecial;
-    }
-
 }

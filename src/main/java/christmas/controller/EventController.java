@@ -14,28 +14,41 @@ public class EventController {
     public void start() {
         outputView.printStartMessage();
         VisitDate visitDate = requestDay();
-        Order order = new Order(inputView.requestOrder());
+        Order order = requestOrder();
+        printOrderResult(order);
         Sale sale = new Sale(visitDate, order);
-        outputView.printOrder(order.getOrder());
-        outputView.printAllPrice(order.getAllPrice());
-        printSale(sale);
-        outputView.printAllSalePrice(sale.getAllSalePrice());
-        outputView.printAfterSalePrice(order.getAllPrice()- sale.getAllSalePrice());
+        printSaleResult(sale);
+        outputView.printAfterSalePrice(order.calculateAllPrice()- sale.getAllSalePrice());
         outputView.printBadge(sale.getBedge());
-
     }
 
     private VisitDate requestDay(){
         try{
-            return new VisitDate(inputView.requestVisitDay());
+            return new VisitDate(inputView.printRequestVisitDayMessage());
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
             return requestDay();
         }
     }
 
-    private void printSale(Sale sale){
-        outputView.printSaleList(sale.getSaleList());
+    private Order requestOrder(){
+        try{
+            return new Order(inputView.printRequestOrderMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return requestOrder();
+        }
+    }
+
+    private void printOrderResult(Order order) {
+        outputView.printOrder(order.getOrder());
+        outputView.printAllPrice(order.calculateAllPrice());
+
+    }
+
+    private void printSaleResult(Sale sale){
+        outputView.printSaleList(sale.getSaleDetails());
+        outputView.printAllSalePrice(sale.getAllSalePrice());
     }
 
 }

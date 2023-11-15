@@ -33,7 +33,7 @@ public class VisitDate {
     }
 
     public boolean isSpecialSale(){
-        return week.getIsSpecial();
+        return week.equals(Week.SUN);
     }
 
 }

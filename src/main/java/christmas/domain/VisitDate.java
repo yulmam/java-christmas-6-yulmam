@@ -20,9 +20,8 @@ public class VisitDate {
         this.week = Week.of(getWeekNumber(date));
     }
 
-    private void validate(int date) throws IllegalArgumentException {
-        if(date < MINIMUM_DAY || date > MAXIMUM_DAY)
-            throw new IllegalArgumentException("[ERROR] 날자는 1부터 31일 사이어야 합니다.");
+    public boolean isSunday(){
+        return week.equals(Week.SUN);
     }
 
     public int getDate(){
@@ -35,12 +34,13 @@ public class VisitDate {
         return false;
     }
 
+    private void validate(int date) throws IllegalArgumentException {
+        if(date < MINIMUM_DAY || date > MAXIMUM_DAY)
+            throw new IllegalArgumentException("[ERROR] 날자는 1부터 31일 사이어야 합니다.");
+    }
+
     private int getWeekNumber(int date) {
         LocalDate week = LocalDate.of(YEAR, MONTH, date);
         return week.getDayOfWeek().getValue();
-    }
-
-    public boolean isSunday(){
-        return week.equals(Week.SUN);
     }
 }

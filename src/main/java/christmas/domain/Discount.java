@@ -30,6 +30,33 @@ public class Discount {
         setDiscountedPrice(order);
     }
 
+    public boolean isPresentDiscount(){
+        return discounts.containsKey("증정 이벤트");
+    }
+
+    public Map<String, Integer> getDiscounts() {
+        return Collections.unmodifiableMap(discounts);
+    }
+
+    public int sumAllDiscounts(){
+        return discounts.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    public String checkBadge() {
+        int allDiscountsPrice = sumAllDiscounts();
+        if(allDiscountsPrice > SANTA_MINIMUM)
+            return "산타";
+        if(allDiscountsPrice > TREE_MINIMUM)
+            return "트리";
+        if(allDiscountsPrice > STAR_MINIMUM)
+            return "별";
+        return "없음";
+    }
+
+    public int getDiscountedPrice() {
+        return discountedPrice;
+    }
+
     private void checkDiscounts(VisitDate visitDate, Order order) {
         checkChristmasDiscount(visitDate);
         checkDateDiscount(visitDate, order);
@@ -71,30 +98,5 @@ public class Discount {
         discountedPrice = order.calculateAllPrice() - sumAllDiscounts();
     }
 
-    public boolean isPresentDiscount(){
-        return discounts.containsKey("증정 이벤트");
-    }
 
-    public Map<String, Integer> getDiscounts() {
-        return Collections.unmodifiableMap(discounts);
-    }
-
-    public int getDiscountedPrice() {
-        return discountedPrice;
-    }
-
-    public int sumAllDiscounts(){
-        return discounts.values().stream().mapToInt(Integer::intValue).sum();
-    }
-
-    public String checkBadge() {
-        int allDiscountsPrice = sumAllDiscounts();
-        if(allDiscountsPrice > SANTA_MINIMUM)
-            return "산타";
-        if(allDiscountsPrice > TREE_MINIMUM)
-            return "트리";
-        if(allDiscountsPrice > STAR_MINIMUM)
-            return "별";
-        return "없음";
-    }
 }
